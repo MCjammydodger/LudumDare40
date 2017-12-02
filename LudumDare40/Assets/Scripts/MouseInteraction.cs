@@ -28,7 +28,13 @@ public class MouseInteraction : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-		
+        if (Input.GetMouseButtonUp(0))
+        {
+            if(currentItem != null)
+            {
+                currentItem.Interact();
+            }
+        }
 	}
 
     public void ShowItemInfo(Item item)
@@ -46,6 +52,7 @@ public class MouseInteraction : MonoBehaviour {
         if(currentItem == item)
         {
             itemInfoUI.SetActive(false);
+            currentItem = null;
         }
     }
 
@@ -64,5 +71,10 @@ public class MouseInteraction : MonoBehaviour {
         {
             itemInfoUI.transform.position = new Vector3(itemPosition.x - (itemInfoWidth / 2), itemPosition.y + (itemCollider.bounds.size.y / 2) + (itemInfoHeight / 2), 1);
         }
+    }
+
+    public Item GetCurrentItem()
+    {
+        return currentItem;
     }
 }

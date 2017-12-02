@@ -20,14 +20,31 @@ public class GameManager : MonoBehaviour {
 
     public LevelBounds levelBounds;
 
+    public List<Item> items;
+
     [SerializeField]
     private Transform levelTransform;
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private InventoryUI inventoryUI;
 
 	// Use this for initialization
-	private void Start () {
+	private void Awake () {
         instance = this;
         levelBounds = CalculateLevelRect(new LevelBounds(), levelTransform);
         levelBounds.top += 100f;    //There is no top limit so make the number bigger than the highest object.
+        Item[] allItems = FindObjectsOfType<Item>();
+        foreach(Item i in allItems)
+        {
+            if(GetItem(i.itemName) == null)
+            {
+                //Make a copy of the item, so there is always one even if the item found is destroyed.
+                Item newItem = Instantiate(i);
+                newItem.gameObject.SetActive(false);
+                items.Add(newItem);
+            }
+        }
 	}
 	
 	// Update is called once per frame
@@ -62,5 +79,27 @@ public class GameManager : MonoBehaviour {
             currentRect = CalculateLevelRect(currentRect, child);
         }
         return currentRect;
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    } 
+
+    public InventoryUI GetInventoryUI()
+    {
+        return inventoryUI;
+    }
+
+    public Item GetItem(string itemName)
+    {
+        foreach(Item i in items)
+        {
+            if(i.itemName == itemName)
+            {
+                return i;
+            }
+        }
+        return null;
     }
 }

@@ -7,13 +7,15 @@ public class Item : MonoBehaviour {
     public string itemName = "Item Name";
     public string interactionInfo = "Click to interact";
 
+    private Inventory inventory;
+
 	// Use this for initialization
 	private void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	private void Update () {
+        inventory = GameManager.instance.GetPlayer().GetComponent<Inventory>();
+    }
+
+    // Update is called once per frame
+    private void Update () {
 		
 	}
 
@@ -29,6 +31,10 @@ public class Item : MonoBehaviour {
 
     public void Interact()
     {
-
+        if (inventory.AddToInventory(this))
+        {
+            MouseInteraction.instance.HideItemInfo(this);
+            Destroy(gameObject);
+        }
     }
 }
