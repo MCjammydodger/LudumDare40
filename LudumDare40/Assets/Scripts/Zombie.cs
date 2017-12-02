@@ -5,10 +5,7 @@ using UnityEngine;
 public class Zombie : Enemy {
 
     private float speed = 5;
-    private float damage = 10;
-    private float timeBetweenAttacks = 0.2f;
-    private float timeSinceAttack = 0;
-    private bool inRange = false;
+
 
 	// Use this for initialization
 	protected override void Start () {
@@ -18,16 +15,11 @@ public class Zombie : Enemy {
 	// Update is called once per frame
 	protected override void Update () {
         base.Update();
-        FollowPlayer();
-        if (inRange)
+        if (isDead)
         {
-            timeSinceAttack += Time.deltaTime;
-            if(timeSinceAttack >= timeBetweenAttacks)
-            {
-                player.TakeDamage(damage);
-                timeSinceAttack = 0;
-            }
+            return;
         }
+
 	}
 
     protected override void FollowPlayer()
@@ -46,21 +38,5 @@ public class Zombie : Enemy {
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        Player p = collision.gameObject.GetComponent<Player>();
-        if(p != null)
-        {
-            inRange = true;
-        }
-    }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Player p = collision.gameObject.GetComponent<Player>();
-        if(p != null)
-        {
-            inRange = false;
-        }
-    }
 }

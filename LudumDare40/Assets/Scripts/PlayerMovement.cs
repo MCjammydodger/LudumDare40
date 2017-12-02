@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     private float speedX = 10f;
     private float jumpSpeed = 15;
     private float jumpDecreaseRate = 60;
-    private float weightMultiplier = 0.2f;
+    private float weightMultiplier = 0.1f;
     private Vector2 movementVector;
 
     private float boxColliderHeight;

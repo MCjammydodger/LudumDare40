@@ -99,10 +99,12 @@ public class Inventory : MonoBehaviour {
             Destroy(hand.GetChild(0).gameObject);
         }
         GameObject newItem = Instantiate(GameManager.instance.GetItem(itemName).gameObject, Vector3.zero, Quaternion.identity, hand);
+        newItem.layer = LayerMask.NameToLayer("Player");
         newItem.SetActive(true);
         newItem.GetComponent<Collider2D>().isTrigger = true;
         newItem.GetComponent<Rigidbody2D>().isKinematic = true;
         newItem.transform.localPosition = Vector3.zero;
+        newItem.GetComponent<Item>().SetEquipped(true);
     }
 
     public List<InventorySlot> GetItems()

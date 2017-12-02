@@ -15,7 +15,7 @@ TagManager:
   - 
   - Item
   - Player
-  - 
+  - Enemy
   - 
   - 
   - 
@@ -41,12 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Zombie
+    uniqueID: 113972743
+    locked: 0
   - name: Player
     uniqueID: 670906647
     locked: 0
   - name: UI
     uniqueID: 3519651481
-    locked: 0
-  - name: Zombie
-    uniqueID: 113972743
     locked: 0

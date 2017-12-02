@@ -7,6 +7,7 @@ public class Item : Interactable {
     public float weight = 0;
 
     private Inventory inventory;
+    private bool equipped = false;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -28,6 +29,15 @@ public class Item : Interactable {
         MouseInteraction.instance.HideItemInfo(this);
     }
 
+    public void SetEquipped(bool e)
+    {
+        equipped = e;
+    }
+
+    public bool IsEquipped()
+    {
+        return equipped;
+    }
     public override void Interact()
     {
         if (inventory.AddToInventory(this))

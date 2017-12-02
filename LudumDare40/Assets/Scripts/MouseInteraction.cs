@@ -50,6 +50,10 @@ public class MouseInteraction : MonoBehaviour {
     }
     public void ShowItemInfo(Item item)
     {
+        if (item.IsEquipped())
+        {
+            return;
+        }
         ShowItemInfo((Interactable)item);
         weightText.text = "Weight: " + item.weight.ToString();
     }

@@ -24,7 +24,6 @@ public class Weapon : Item {
         {
             if (playerAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
             {
-                Debug.Log("Swinging ended");
                 swinging = false;
                 damageDealt = false;
             }
@@ -47,7 +46,6 @@ public class Weapon : Item {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Collision!");
         if (swinging && !damageDealt)
         {
             Enemy e = collision.gameObject.GetComponent<Enemy>();

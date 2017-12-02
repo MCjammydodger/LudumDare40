@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour {
     public List<Item> items;
 
     [SerializeField]
-    private Transform levelTransform;
+    private SpawnPosition spawnPoint;
     [SerializeField]
     private GameObject player;
     [SerializeField]
@@ -32,8 +32,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	private void Awake () {
         instance = this;
-        levelBounds = CalculateLevelRect(new LevelBounds(), levelTransform);
-        levelBounds.top += 100f;    //There is no top limit so make the number bigger than the highest object.
+        spawnPoint.MoveToSpawnPosition();
         Item[] allItems = FindObjectsOfType<Item>();
         foreach(Item i in allItems)
         {
@@ -52,6 +51,12 @@ public class GameManager : MonoBehaviour {
 		
 	}
 
+    public void CalculateLevelRect(Transform parent)
+    {
+        levelBounds = CalculateLevelRect(new LevelBounds(), parent);
+        levelBounds.top += 100f;    //There is no top limit so make the number bigger than the highest object.
+    }
+
     private LevelBounds CalculateLevelRect(LevelBounds currentRect, Transform parent)
     {
         foreach(Transform child in parent)
@@ -59,19 +64,24 @@ public class GameManager : MonoBehaviour {
             Collider2D c = child.GetComponent<Collider2D>();
             if(c != null)
             {
-                if(c.bounds.min.x < currentRect.left)
+                bool newRect = false;
+                if (currentRect.left == 0 && currentRect.right == 0 && currentRect.top == 0 && currentRect.bottom == 0)
+                {
+                    newRect = true;
+                }
+                if(c.bounds.min.x < currentRect.left || newRect)
                 {
                     currentRect.left = c.bounds.min.x;
                 }
-                if(c.bounds.max.y > currentRect.top)
+                if(c.bounds.max.y > currentRect.top || newRect)
                 {
                     currentRect.top = c.bounds.min.y;
                 }
-                if(c.bounds.max.x > currentRect.right)
+                if(c.bounds.max.x > currentRect.right || newRect)
                 {
                     currentRect.right = c.bounds.max.x;
                 }
-                if(c.bounds.min.y < currentRect.bottom)
+                if(c.bounds.min.y < currentRect.bottom || newRect)
                 {
                     currentRect.bottom = c.bounds.min.y;
                 }
