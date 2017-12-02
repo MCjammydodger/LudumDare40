@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spider : Enemy {
-
+    [SerializeField]
     private float timeToJump = 2;
     private float timeSinceJump = 0;
     private float jumpDecreaseRate = 60;

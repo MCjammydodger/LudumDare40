@@ -147,6 +147,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 114977821837603790, guid: cb26b34d0fde7584289ec4a3b1789135,
+        type: 2}
+      propertyPath: timeBetweenAttacks
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114977821837603790, guid: cb26b34d0fde7584289ec4a3b1789135,
+        type: 2}
+      propertyPath: timeToJump
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: cb26b34d0fde7584289ec4a3b1789135, type: 2}
   m_IsPrefabParent: 0
@@ -3502,7 +3512,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 880452021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.8, y: -55.9, z: -10}
+  m_LocalPosition: {x: -0.8, y: 5.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
