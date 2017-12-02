@@ -7,6 +7,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     private float speedX = 10f;
+    private float jumpSpeed = 15;
+    private float jumpDecreaseRate = 60;
     private Vector2 movementVector;
 
     private float boxColliderHeight;
@@ -31,11 +33,17 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	private void Update () {
         float movementX = Input.GetAxis("Horizontal") * speedX;
+        float movementY = Mathf.Max(Physics2D.gravity.y, movementVector.y - (jumpDecreaseRate * Time.deltaTime));
+        bool jumpPressed = Input.GetButton("Jump");
+
+
         bool walkingAnim = false;
+
+        bool isGrounded = IsGrounded();
         //If the player is not on the ground, then the player should not walk/run
         if (movementX != 0)
         {
-            if (!IsGrounded())
+            if (!isGrounded)
             {
                 walkingAnim = false;
             }
@@ -55,10 +63,18 @@ public class PlayerMovement : MonoBehaviour {
             }
         }
 
+        if (jumpPressed)
+        {
+            if (isGrounded)
+            {
+                movementY = jumpSpeed;
+            }
+        }
+        
         animator.SetBool(animatorWalking, walkingAnim);
 
         //Compute the movement vector to be used during FixedUpdate()
-        movementVector = new Vector2(movementX, Physics2D.gravity.y);
+        movementVector = new Vector2(movementX, movementY);
 	}
 
     //FixedUpdate is called once per physics frame
