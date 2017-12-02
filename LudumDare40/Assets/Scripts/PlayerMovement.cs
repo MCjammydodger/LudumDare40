@@ -89,7 +89,6 @@ public class PlayerMovement : MonoBehaviour {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, maxDistanceToGround);
         if(hit.transform != null)
         {
-            Debug.Log("Hit: " + hit.transform.name);
             return true;
         }
         return false;
