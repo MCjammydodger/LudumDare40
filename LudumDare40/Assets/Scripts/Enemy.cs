@@ -8,6 +8,9 @@ public class Enemy : Interactable {
     [SerializeField]
     protected Transform graphicsTransform;
 
+    [SerializeField]
+    private Item itemToDrop;
+
     protected Vector2 movementVector;
 
     protected Rigidbody2D rb;
@@ -80,6 +83,7 @@ public class Enemy : Interactable {
             isDead = true;
             transform.rotation = Quaternion.Euler(0, 0, -90);
             movementVector = new Vector3(0, Physics2D.gravity.y);
+            Instantiate(itemToDrop, transform.position, Quaternion.identity);
         }
     }
 

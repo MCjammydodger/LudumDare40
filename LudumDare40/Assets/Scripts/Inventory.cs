@@ -134,4 +134,13 @@ public class Inventory : MonoBehaviour {
             hand.GetChild(0).GetComponent<Item>().Use();
         }
     }
+
+    public Item GetEquipped()
+    {
+        if(hand.childCount == 1)
+        {
+            return hand.GetChild(0).GetComponent<Item>();
+        }
+        return null;
+    }
 }

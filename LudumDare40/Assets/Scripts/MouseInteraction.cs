@@ -58,6 +58,15 @@ public class MouseInteraction : MonoBehaviour {
         weightText.text = "Weight: " + item.weight.ToString();
     }
 
+    public void ShowItemInfo(Door item)
+    {
+        ShowItemInfo((Interactable)item);
+        if (item.requiredKey != null)
+        {
+            itemInteractionText.text = "Requires " + item.requiredKey.itemName + " to unlock.";
+        }
+    }
+
     public void HideItemInfo(Interactable item)
     {
         if(currentItem == item)
