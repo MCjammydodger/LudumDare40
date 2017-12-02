@@ -32,6 +32,7 @@ public class InventoryUI : MonoBehaviour {
             slotUIs[i].SetInventoryUI(this);
         }
         //Refresh();
+        gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame

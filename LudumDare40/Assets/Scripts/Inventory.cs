@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour {
     private int inventoryCapacity = 18;
 
 	// Use this for initialization
-	private void Start () {
+	private void Awake () {
         items = new List<InventorySlot>();
 	}
 	
@@ -55,7 +55,6 @@ public class Inventory : MonoBehaviour {
         slot.quantity = 1;
         slot.weight = item.weight;
         items.Add(slot);
-        
         return true;
     }
 
@@ -124,6 +123,7 @@ public class Inventory : MonoBehaviour {
         {
             total += slot.weight * slot.quantity;
         }
+        HUD.instance.SetWeightText(total);
         return total;
     }
 

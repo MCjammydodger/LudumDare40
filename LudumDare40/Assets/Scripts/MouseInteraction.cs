@@ -21,6 +21,11 @@ public class MouseInteraction : MonoBehaviour {
 
     private RectTransform itemInfoUITransform;
     private Transform cameraTransform;
+
+    private float interactionRange = 3;
+    private bool inRange;
+    private string interactionText;
+
 	// Use this for initialization
 	private void Start () {
         instance = this;
@@ -30,7 +35,25 @@ public class MouseInteraction : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-        if (Input.GetMouseButtonUp(0))
+        if (currentItem != null)
+        {
+            inRange = Vector3.Distance(currentItem.transform.position, GameManager.instance.GetPlayer().transform.position) < interactionRange;
+        }
+        else
+        {
+            inRange = false;
+        }
+
+        if (inRange)
+        {
+            itemInteractionText.text = interactionText;
+        }
+        else
+        {
+            itemInteractionText.text = "OUT OF RANGE";
+        }
+
+        if (Input.GetMouseButtonUp(0) && inRange)
         {
             if(currentItem != null)
             {
@@ -45,7 +68,7 @@ public class MouseInteraction : MonoBehaviour {
         itemNameText.text = currentItem.itemName;
         itemInfoUI.SetActive(true);
         weightText.text = "";
-        itemInteractionText.text = currentItem.interactionInfo;
+        interactionText = currentItem.interactionInfo;
         SetItemInfoPosition();        
     }
     public void ShowItemInfo(Item item)
@@ -63,7 +86,7 @@ public class MouseInteraction : MonoBehaviour {
         ShowItemInfo((Interactable)item);
         if (item.requiredKey != null)
         {
-            itemInteractionText.text = "Requires " + item.requiredKey.itemName + " to unlock.";
+            interactionText = "Requires " + item.requiredKey.itemName + " to unlock.";
         }
     }
 

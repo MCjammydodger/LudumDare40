@@ -19,7 +19,7 @@ public class InventoryItemUI : MonoBehaviour {
     private Image image;
 
 	// Use this for initialization
-	private void Start () {
+	private void Awake () {
         image = GetComponent<Image>();
         image.color = normalColour;
 	}

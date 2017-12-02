@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     private float speedX = 10f;
     private float jumpSpeed = 15;
     private float jumpDecreaseRate = 60;
-    private float weightMultiplier = 0.1f;
+    private float weightMultiplier = 0.4f;
     private Vector2 movementVector;
 
     private float boxColliderHeight;
@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-        float movementX = Input.GetAxis("Horizontal") * (speedX / (Mathf.Max(1, inventory.GetTotalWeight() * weightMultiplier)));
+        float weightPenalty = (Mathf.Max(1, inventory.GetTotalWeight() * weightMultiplier));
+        float movementX = Input.GetAxis("Horizontal") * (speedX / weightPenalty);
         float movementY = Mathf.Max(Physics2D.gravity.y, movementVector.y - (jumpDecreaseRate * Time.deltaTime));
         bool jumpPressed = Input.GetButton("Jump");
 
@@ -70,7 +71,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (isGrounded)
             {
-                movementY = jumpSpeed;
+                movementY = jumpSpeed / weightPenalty;
             }
         }
         

@@ -231,7 +231,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1197499796500754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.5, y: 0, z: 0}
+  m_LocalPosition: {x: 26.490265, y: -88.803154, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4391933965824624}
@@ -283,7 +283,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15986818, y: 1.4880047}
+  m_Offset: {x: 0.1550808, y: 1.4880047}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -294,7 +294,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3197364, y: 3.0905848}
+  m_Size: {x: 1.1186752, y: 3.0905848}
   m_EdgeRadius: 0
 --- !u!114 &114885796007952104
 MonoBehaviour:
@@ -309,8 +309,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Zombie
   interactionInfo: 
-  player: {fileID: 0}
   graphicsTransform: {fileID: 4391933965824624}
+  itemToDrop: {fileID: 0}
+  maxHealth: 100
+  damage: 10
+  timeBetweenAttacks: 0.2
 --- !u!212 &212161741496313662
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	private void Awake () {
+        PauseGame(false);
         instance = this;
         spawnPoint.MoveToSpawnPosition();
         Item[] allItems = FindObjectsOfType<Item>();
@@ -116,7 +117,7 @@ public class GameManager : MonoBehaviour {
     public void GameOver()
     {
         PauseGame(true);
-        Debug.Log("Game Over!");
+        HUD.instance.ShowGameoverScreen();
     }
 
     public void PauseGame(bool pause)
