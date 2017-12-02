@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     private float speedX = 10f;
     private float jumpSpeed = 15;
     private float jumpDecreaseRate = 60;
+    private float weightMultiplier = 0.2f;
     private Vector2 movementVector;
 
     private float boxColliderHeight;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private Rigidbody2D rb;
     private Animator animator;
+    private Inventory inventory;
 
     //Strings used by the animator:
     private string animatorWalking = "Walking";
@@ -28,11 +30,12 @@ public class PlayerMovement : MonoBehaviour {
 	private void Start () {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        inventory = GetComponent<Inventory>();
 	}
 	
 	// Update is called once per frame
 	private void Update () {
-        float movementX = Input.GetAxis("Horizontal") * speedX;
+        float movementX = Input.GetAxis("Horizontal") * (speedX / (Mathf.Max(1, inventory.GetTotalWeight() * weightMultiplier)));
         float movementY = Mathf.Max(Physics2D.gravity.y, movementVector.y - (jumpDecreaseRate * Time.deltaTime));
         bool jumpPressed = Input.GetButton("Jump");
 

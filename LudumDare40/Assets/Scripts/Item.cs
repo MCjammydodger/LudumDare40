@@ -2,39 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour {
-    
-    public string itemName = "Item Name";
-    public string interactionInfo = "Click to interact";
+public class Item : Interactable {
+    public bool equippable = false;
+    public float weight = 0;
 
     private Inventory inventory;
 
 	// Use this for initialization
-	private void Start () {
+	protected virtual void Start () {
         inventory = GameManager.instance.GetPlayer().GetComponent<Inventory>();
     }
 
     // Update is called once per frame
-    private void Update () {
+    protected virtual void Update () {
 		
 	}
 
-    private void OnMouseEnter()
+    protected override void OnMouseEnter()
     {
         MouseInteraction.instance.ShowItemInfo(this);
     }
 
-    private void OnMouseExit()
+    protected override void OnMouseExit()
     {
         MouseInteraction.instance.HideItemInfo(this);
     }
 
-    public void Interact()
+    public override void Interact()
     {
         if (inventory.AddToInventory(this))
         {
             MouseInteraction.instance.HideItemInfo(this);
             Destroy(gameObject);
         }
+    }
+
+    public virtual void Use()
+    {
+
     }
 }

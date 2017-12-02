@@ -8,12 +8,14 @@ public class MouseInteraction : MonoBehaviour {
 
     public static MouseInteraction instance;
 
-    private Item currentItem;
+    private Interactable currentItem;
 
     [SerializeField]
     private GameObject itemInfoUI;
     [SerializeField]
     private Text itemNameText;
+    [SerializeField]
+    private Text weightText;
     [SerializeField]
     private Text itemInteractionText;
 
@@ -37,17 +39,22 @@ public class MouseInteraction : MonoBehaviour {
         }
 	}
 
-    public void ShowItemInfo(Item item)
+    public void ShowItemInfo(Interactable item)
     {
         currentItem = item;
         itemNameText.text = currentItem.itemName;
         itemInfoUI.SetActive(true);
-        itemInteractionText.text = "[" + currentItem.interactionInfo + "]";
-        SetItemInfoPosition();
-        
+        weightText.text = "";
+        itemInteractionText.text = currentItem.interactionInfo;
+        SetItemInfoPosition();        
+    }
+    public void ShowItemInfo(Item item)
+    {
+        ShowItemInfo((Interactable)item);
+        weightText.text = "Weight: " + item.weight.ToString();
     }
 
-    public void HideItemInfo(Item item)
+    public void HideItemInfo(Interactable item)
     {
         if(currentItem == item)
         {
@@ -65,15 +72,15 @@ public class MouseInteraction : MonoBehaviour {
 
         if (itemPosition.x < cameraTransform.position.x)
         {
-            itemInfoUI.transform.position = new Vector3(itemPosition.x + (itemInfoWidth / 2), itemPosition.y + (itemCollider.bounds.size.y / 2) + (itemInfoHeight / 2), 1);
+            itemInfoUI.transform.position = new Vector3(itemPosition.x + (itemInfoWidth / 2), (itemCollider.bounds.max.y) + (itemInfoHeight / 2), 1);
         }
         else
         {
-            itemInfoUI.transform.position = new Vector3(itemPosition.x - (itemInfoWidth / 2), itemPosition.y + (itemCollider.bounds.size.y / 2) + (itemInfoHeight / 2), 1);
+            itemInfoUI.transform.position = new Vector3(itemPosition.x - (itemInfoWidth / 2), (itemCollider.bounds.max.y) + (itemCollider.bounds.size.y / 2) + (itemInfoHeight / 2), 1);
         }
     }
 
-    public Item GetCurrentItem()
+    public Interactable GetCurrentItem()
     {
         return currentItem;
     }

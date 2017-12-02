@@ -102,4 +102,22 @@ public class GameManager : MonoBehaviour {
         }
         return null;
     }
+
+    public void GameOver()
+    {
+        PauseGame(true);
+        Debug.Log("Game Over!");
+    }
+
+    public void PauseGame(bool pause)
+    {
+        if (pause)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
 }

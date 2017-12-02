@@ -47,3 +47,6 @@ TagManager:
   - name: UI
     uniqueID: 3519651481
     locked: 0
+  - name: Zombie
+    uniqueID: 113972743
+    locked: 0

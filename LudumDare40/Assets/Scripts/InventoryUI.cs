@@ -31,7 +31,7 @@ public class InventoryUI : MonoBehaviour {
             slotUIs[i] = Instantiate(inventoryItemUIPrefab, itemsTransform);
             slotUIs[i].SetInventoryUI(this);
         }
-        Refresh();
+        //Refresh();
 	}
 	
 	// Update is called once per frame
@@ -79,12 +79,17 @@ public class InventoryUI : MonoBehaviour {
             }
         }
         dropButton.interactable = false;
+        equipButton.interactable = false;
 
         if (currentSelectedIndex < slots.Count)
         {
             if (slots[currentSelectedIndex].quantity > 0)
             {
                 dropButton.interactable = true;
+                if (GameManager.instance.GetItem(slots[currentSelectedIndex].itemName).equippable)
+                {
+                    equipButton.interactable = true;
+                }
             }
         }
     }
@@ -93,5 +98,10 @@ public class InventoryUI : MonoBehaviour {
     {
         inventory.RemoveFromInventory(slots[currentSelectedIndex].itemName);
         Refresh();
+    }
+
+    public void EquipSelectedItem()
+    {
+        inventory.EquipItem(slots[currentSelectedIndex].itemName);
     }
 }
