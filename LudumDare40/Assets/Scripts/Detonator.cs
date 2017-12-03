@@ -33,6 +33,7 @@ public class Detonator : Interactable {
             if(countdown <= 0)
             {
                 //Big 'splodes
+                HUD.instance.SetCountdownText(-1);
                 audioSource.clip = AudioManager.instance.explosion;
                 audioSource.Play();
                 if(GameManager.instance.GetPlayer().GetComponent<Player>().currentLevel == level)

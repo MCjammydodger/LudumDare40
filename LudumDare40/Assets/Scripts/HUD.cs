@@ -46,6 +46,10 @@ public class HUD : MonoBehaviour {
     public void SetCountdownText(int value)
     {
         countdownText.text = "Time until big explosion: " + value.ToString();
+        if(value < 0)
+        {
+            countdownText.text = "";
+        }
     }
 
     public void SetWeightText(float totalWeight)
