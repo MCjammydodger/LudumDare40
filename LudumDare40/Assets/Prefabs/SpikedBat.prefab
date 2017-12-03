@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98075a6c43370f94b87c0d357fa5d3e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Spiked Bat
+  itemName: Nailed Baseball Bat
   interactionInfo: Click to pick up
   equippable: 1
   weight: 3

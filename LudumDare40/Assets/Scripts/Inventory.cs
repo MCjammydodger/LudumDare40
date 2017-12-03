@@ -15,7 +15,8 @@ public class Inventory : MonoBehaviour {
     }
 
     private List<InventorySlot> items;
-    private int inventoryCapacity = 18;
+    private int inventoryCapacity = 6;
+    private InventoryUI inventoryUI;
 
 	// Use this for initialization
 	private void Awake () {
@@ -24,12 +25,18 @@ public class Inventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-        if (Input.GetKeyUp(KeyCode.I))
+        if (Input.GetKeyUp(KeyCode.Q))
         {
             MouseInteraction.instance.HideItemInfo(MouseInteraction.instance.GetCurrentItem());
             GameObject inventoryUI = GameManager.instance.GetInventoryUI().gameObject;
             inventoryUI.SetActive(!inventoryUI.activeSelf);
         }
+    }
+
+    public void SetInventoryUI(InventoryUI ui)
+    {
+        inventoryUI = ui;
+        inventoryUI.Refresh();
     }
 
     public bool AddToInventory(Item item)
@@ -43,6 +50,10 @@ public class Inventory : MonoBehaviour {
                 newSlot.quantity = items[i].quantity + 1;
                 newSlot.weight = item.weight;
                 items[i] = newSlot;
+                if(inventoryUI != null)
+                {
+                    inventoryUI.Refresh();
+                }
                 return true;
             }
         }
@@ -55,6 +66,10 @@ public class Inventory : MonoBehaviour {
         slot.quantity = 1;
         slot.weight = item.weight;
         items.Add(slot);
+        if (inventoryUI != null)
+        {
+            inventoryUI.Refresh();
+        }
         return true;
     }
 
@@ -71,6 +86,15 @@ public class Inventory : MonoBehaviour {
                     slot.quantity = items[i].quantity - 1;
                     slot.weight = items[i].weight;
                     items[i] = slot;
+                    if (hand.childCount == 1)
+                    {
+                        Debug.Log("In hand");
+                        if (hand.GetChild(0).GetComponent<Item>().itemName == itemName)
+                        {
+                            Debug.Log("Item is the same");
+                            Destroy(hand.GetChild(0).gameObject);
+                        }
+                    }
                 }
                 else
                 {
@@ -85,6 +109,10 @@ public class Inventory : MonoBehaviour {
                 }
                 GameObject newItem = Instantiate(GameManager.instance.GetItem(itemName).gameObject, transform.position, Quaternion.identity);
                 newItem.SetActive(true);
+                if (inventoryUI != null)
+                {
+                    inventoryUI.Refresh();
+                }
                 return true;
             }
         }
@@ -93,10 +121,10 @@ public class Inventory : MonoBehaviour {
 
     public void EquipItem(string itemName)
     {
-        if(hand.childCount == 1)
-        {
-            Destroy(hand.GetChild(0).gameObject);
+        foreach(Transform child in hand) { 
+            Destroy(child.gameObject);
         }
+        
         GameObject newItem = Instantiate(GameManager.instance.GetItem(itemName).gameObject, Vector3.zero, Quaternion.identity, hand);
         newItem.layer = LayerMask.NameToLayer("Player");
         newItem.SetActive(true);

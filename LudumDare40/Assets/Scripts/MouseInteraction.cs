@@ -44,7 +44,7 @@ public class MouseInteraction : MonoBehaviour {
             inRange = false;
         }
 
-        if (inRange)
+        if (inRange || interactionText == "")
         {
             itemInteractionText.text = interactionText;
         }
@@ -88,6 +88,12 @@ public class MouseInteraction : MonoBehaviour {
         {
             interactionText = "Requires " + item.requiredKey.itemName + " to unlock.";
         }
+    }
+
+    public void ShowItemInfo(Enemy item)
+    {
+        ShowItemInfo((Interactable)item);
+        weightText.text = item.GetHealth() + " HP";
     }
 
     public void HideItemInfo(Interactable item)

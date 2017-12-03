@@ -44,6 +44,9 @@ TagManager:
   - name: Zombie
     uniqueID: 113972743
     locked: 0
+  - name: Bat
+    uniqueID: 3060232929
+    locked: 0
   - name: Player
     uniqueID: 670906647
     locked: 0

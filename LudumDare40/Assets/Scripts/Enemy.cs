@@ -15,6 +15,8 @@ public class Enemy : Interactable {
 
     protected Rigidbody2D rb;
 
+    protected Transform currentLevel;
+
     [SerializeField]
     protected float maxHealth = 100;
     protected float health;
@@ -28,11 +30,19 @@ public class Enemy : Interactable {
     private float timeBetweenAttacks = 0.2f;
     private float timeSinceAttack = 0;
 
+    protected AudioSource audioSource;
+
     // Use this for initialization
     protected virtual void Start () {
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         player = GameManager.instance.GetPlayer().GetComponent<Player>();
+        audioSource = GetComponent<AudioSource>();
+        if(audioSource == null)
+        {
+            Debug.LogError("No audio source on enemy!");
+        }
+        currentLevel = transform.parent;
 	}
 	
 	// Update is called once per frame
@@ -56,6 +66,11 @@ public class Enemy : Interactable {
     protected virtual void FollowPlayer()
     {
 
+    }
+
+    protected override void OnMouseEnter()
+    {
+        MouseInteraction.instance.ShowItemInfo(this);
     }
 
     protected void FlipDirection(Transform parent, bool faceRight)
@@ -87,7 +102,11 @@ public class Enemy : Interactable {
             {
                 Instantiate(itemToDrop, transform.position, Quaternion.identity);
             }
+            GetComponent<Collider2D>().isTrigger = true;
+            Destroy(gameObject, 2);
         }
+        audioSource.clip = AudioManager.instance.enemyHit;
+        audioSource.Play();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -106,5 +125,10 @@ public class Enemy : Interactable {
         {
             inRange = false;
         }
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }

@@ -12,8 +12,6 @@ public class InventoryUI : MonoBehaviour {
     [SerializeField]
     private Inventory inventory;
     [SerializeField]
-    private Button equipButton;
-    [SerializeField]
     private Button dropButton;
 
     private int inventoryCapacity;
@@ -31,8 +29,8 @@ public class InventoryUI : MonoBehaviour {
             slotUIs[i] = Instantiate(inventoryItemUIPrefab, itemsTransform);
             slotUIs[i].SetInventoryUI(this);
         }
-        //Refresh();
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        inventory.SetInventoryUI(this);
 	}
 	
 	// Update is called once per frame
@@ -40,12 +38,7 @@ public class InventoryUI : MonoBehaviour {
 		
 	}
 
-    private void OnEnable()
-    {
-        Refresh();    
-    }
-
-    private void Refresh()
+    public void Refresh()
     {
         for (int i = 0; i < inventoryCapacity;  i++) {
             if(i < slots.Count)
@@ -59,14 +52,17 @@ public class InventoryUI : MonoBehaviour {
                 slotUIs[i].SetItemQuantity(0);
             }
             slotUIs[i].SetIndex(i);
-            slotUIs[i].SetSelected(false);
+            //slotUIs[i].SetSelected(false);
         }
-        equipButton.interactable = false;
-        dropButton.interactable = false;
+        SetCurrentSelected(currentSelectedIndex);
     }
 
     public void SetCurrentSelected(int i)
     {
+        if(slotUIs == null)
+        {
+            return;
+        }
         currentSelectedIndex = i;
         for(int slot = 0; slot < slotUIs.Length; slot++)
         {
@@ -80,7 +76,6 @@ public class InventoryUI : MonoBehaviour {
             }
         }
         dropButton.interactable = false;
-        equipButton.interactable = false;
 
         if (currentSelectedIndex < slots.Count)
         {
@@ -89,7 +84,7 @@ public class InventoryUI : MonoBehaviour {
                 dropButton.interactable = true;
                 if (GameManager.instance.GetItem(slots[currentSelectedIndex].itemName).equippable)
                 {
-                    equipButton.interactable = true;
+                    EquipSelectedItem();
                 }
             }
         }

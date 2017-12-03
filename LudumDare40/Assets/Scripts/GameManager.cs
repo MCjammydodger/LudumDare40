@@ -28,6 +28,15 @@ public class GameManager : MonoBehaviour {
     private GameObject player;
     [SerializeField]
     private InventoryUI inventoryUI;
+    [SerializeField]
+    private Transform earth;
+    [SerializeField]
+    private GameObject ufo;
+
+
+    private float timeToShowVictoryScreen = 2;
+    private float timeSinceVictory = 0;
+    private bool victory = false;
 
 	// Use this for initialization
 	private void Awake () {
@@ -49,11 +58,21 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	private void Update () {
-		
+        if (victory)
+        {
+            if (timeSinceVictory > timeToShowVictoryScreen)
+            {
+                PauseGame(true);
+                HUD.instance.ShowVictoryScreen();
+                inventoryUI.gameObject.SetActive(false);
+            }
+            timeSinceVictory += Time.unscaledDeltaTime;
+        }
 	}
 
     public void CalculateLevelRect(Transform parent)
     {
+        player.GetComponent<Player>().currentLevel = parent;
         levelBounds = CalculateLevelRect(new LevelBounds(), parent);
         levelBounds.top += 100f;    //There is no top limit so make the number bigger than the highest object.
     }
@@ -118,6 +137,15 @@ public class GameManager : MonoBehaviour {
     {
         PauseGame(true);
         HUD.instance.ShowGameoverScreen();
+        inventoryUI.gameObject.SetActive(false);
+    }
+
+    public void Victory()
+    {
+        Camera.main.GetComponent<CameraFollow>().enabled = false;
+        Camera.main.transform.position = new Vector3(earth.position.x, earth.position.y, Camera.main.transform.position.z);
+        ufo.SetActive(true);
+        victory = true;
     }
 
     public void PauseGame(bool pause)

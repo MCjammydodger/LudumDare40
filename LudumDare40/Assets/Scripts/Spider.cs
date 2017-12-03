@@ -9,6 +9,7 @@ public class Spider : Enemy {
     private float jumpDecreaseRate = 60;
     private float speed = 10;
     private float jumpSpeed = 10;
+
     // Use this for initialization
     protected override void Start () {
         base.Start();
@@ -30,6 +31,11 @@ public class Spider : Enemy {
         {
             timeSinceJump = 0;
             movementY = 10;
+            if (currentLevel == GameManager.instance.GetPlayer().GetComponent<Player>().currentLevel)
+            {
+                audioSource.clip = AudioManager.instance.spider;
+                audioSource.Play();
+            }
         }
 
         if (!IsGrounded())

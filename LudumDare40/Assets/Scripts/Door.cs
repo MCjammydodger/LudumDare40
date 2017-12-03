@@ -10,10 +10,16 @@ public class Door : Interactable {
     public Item requiredKey;
 
     private Inventory inventory;
+    private AudioSource audioSource;
 
 	// Use this for initialization
 	private void Start () {
-        inventory = GameManager.instance.GetPlayer().GetComponent<Inventory>();	
+        inventory = GameManager.instance.GetPlayer().GetComponent<Inventory>();
+        audioSource = GetComponent<AudioSource>();
+        if(audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
 	}
 	
 	// Update is called once per frame
@@ -31,6 +37,8 @@ public class Door : Interactable {
         if(requiredKey == null || (inventory.GetEquipped() != null && inventory.GetEquipped().itemName == requiredKey.itemName))
         {
             link.MoveToSpawnPosition();
+            audioSource.clip = AudioManager.instance.door;
+            audioSource.Play();
         }
     }
 }

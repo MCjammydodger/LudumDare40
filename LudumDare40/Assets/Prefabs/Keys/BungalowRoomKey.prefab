@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229d340d20c71354eb6d623d2a17bc78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Bungalow Room Key
+  itemName: Secret Room Key
   interactionInfo: Click to pick up
   equippable: 1
   weight: 0.5

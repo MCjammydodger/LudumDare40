@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour {
     private float weightMultiplier = 0.4f;
     private Vector2 movementVector;
 
-    private float boxColliderHeight;
+    private float boxColliderWidth;
 
     [SerializeField]
     private Transform graphicsTransform;
@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D rb;
     private Animator animator;
     private Inventory inventory;
+    private BoxCollider2D bc;
 
     //Strings used by the animator:
     private string animatorWalking = "Walking";
@@ -31,6 +32,8 @@ public class PlayerMovement : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         inventory = GetComponent<Inventory>();
+        bc = GetComponent<BoxCollider2D>();
+        boxColliderWidth = bc.bounds.size.x;
 	}
 	
 	// Update is called once per frame
@@ -90,10 +93,18 @@ public class PlayerMovement : MonoBehaviour {
     private bool IsGrounded()
     {
         float maxDistanceToGround = 0.05f;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.down, maxDistanceToGround);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector3(transform.position.x - (boxColliderWidth / 2), transform.position.y, transform.position.z), Vector3.down, maxDistanceToGround);
         if(hit.transform != null)
         {
             return true;
+        }
+        else
+        {
+            hit = Physics2D.Raycast(new Vector3(transform.position.x + (boxColliderWidth / 2), transform.position.y, transform.position.z), Vector3.down, maxDistanceToGround);
+            if(hit.transform != null)
+            {
+                return true;
+            }
         }
         return false;
     }

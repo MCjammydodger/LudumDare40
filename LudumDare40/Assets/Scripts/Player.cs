@@ -8,12 +8,17 @@ public class Player : MonoBehaviour {
     private float health;
 
     private Inventory inventory;
+    private AudioSource audioSource;
+
+    [HideInInspector]
+    public Transform currentLevel;
 
 	// Use this for initialization
 	private void Start () {
         inventory = GetComponent<Inventory>();
         health = maxHealth;
         HUD.instance.SetHealthBar(1);
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -21,6 +26,10 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.E))
         {
             inventory.UseEquipped();
+        }
+        if(transform.position.y < GameManager.instance.levelBounds.bottom - 10)
+        {
+            GameManager.instance.GameOver();
         }
 	}
     
@@ -32,5 +41,7 @@ public class Player : MonoBehaviour {
         {
             GameManager.instance.GameOver();
         }
+        audioSource.clip = AudioManager.instance.hit;
+        audioSource.Play();
     }
 }
